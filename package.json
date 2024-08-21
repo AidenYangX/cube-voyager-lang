@@ -1,25 +1,45 @@
 {
   "name": "cube-voyager-lang",
   "displayName": "cube-voyager-lang",
+  "publisher": "aiden-yang",
+  "author": "aiden-yang",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AidenYangX/cube-voyager-lang"
+  },
+  "icon": "./ext-icon.ico",
   "description": "A Language Support for Cube Voyager",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.92.0"
   },
+  "license": "Apache-2.0",
   "categories": [
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "cvoyager",
-      "aliases": ["Cube Voyager", "cvoyager"],
-      "extensions": [".s"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "cvoyager",
-      "scopeName": "source.s",
-      "path": "./syntaxes/cvoyager.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "cvoyager",
+        "aliases": [
+          "Cube Voyager",
+          "cvoyager"
+        ],
+        "extensions": [
+          ".s"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "cvoyager",
+        "scopeName": "source.s",
+        "path": "./syntaxes/cvoyager.tmLanguage.json"
+      }
+    ]
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0"
   }
 }

@@ -1,0 +1,72 @@
+$schema: "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json"
+name: "Cube Voyager"
+patterns:
+  - include: "#keywords"
+  - include: "#strings"
+  - include: "#comments"
+  - include: "#commands"
+  - include: "#doubleCommands"
+  - include: "#comp-statement"
+  - include: "#env-token"
+  - include: "#file-variable-token"
+repository:
+  # ========== Keywords ==========
+  keywords:
+    patterns:
+      - name: "keyword.control.cvoyager"
+        match: "\b(IF|ELSEIF|ELSE|ENDIF|LOOP|ENDLOOP|BREAK|CODE|RESUME|COMP|CONVERTMAT|CONTINUE|COPY|ENDCOPY|CLEARFILEO|FILEO|URL|EXIT|VARI|FILEI|FILEO|PRINTO|GOTO|afterpgm|aftersys|beforepgm|beforesys|RUN|ENDRUN|MAXSTRING|VARDECIMAL|PRINT|ANSWER|QUESTION|WAIT|STACK|TRACE|VARS|ATTACHMENTS|CC|FROM|MESSAGE|PASSWORD|PORT|SMTPSERVER|SUBJECT|TO|USERNAME|TIME|ARRAY|COMP|COMPARE|CROSSTAB|DELETE|LOOKUP|LOOP|PARAMETERS|PLOT|PLOTTER|PROCESS|ENDPROCESS|REPORT|SORT|SPDCAP|ABORT|BSEARCH|CALL|CHOICE|FILET|FILLMW|FREQUENCY|JLOOP|ENDJLOOP|PRINTROW|RENUMBER|SET|WRITE|XCHOICE|NEWPAGE|ONRUNERRORGOTO|PROMPT|SENDMAIL|SLEPP|MATOEVERY|MAXITERS|MAXPURPS|MAXRMSE|ZONES|ACOMP|PCOMP|A|AGF|CONTROL|EXCLUDE|INCLUDE|MW|P|PGF|FUNCTION|LINKLOOP|ENDLINKLOOP|PATHLOAD|PRINTROW|GROUP|SORT|TURNS)\b"
+  # ========== Statements ==========
+  strings:
+    name: "string.quoted.double.cvoyager"
+    begin: "\""
+    end: "\""
+    patterns:
+      - name: "constant.character.escape.cvoyager"
+        match: "\\."
+  comments:
+    name: "comment.line.semicolon.pilot"
+    match: ";.*$"
+  commands:
+    name: "keyword.operator.system-command.cvoyager"
+    match: "\*(?=\S.*\S)\b"
+  doubleCommands:
+    name: "keyword.operator.system-command.interactive.cvoyager"
+    match: "\*\*(?=\S.*\S)\b"
+  comp-statement:
+    patterns:
+      - name: "keyword.control.comp.cvoyager"
+        match: "\b(COMP)\b"
+      - name: "meta.expression.cvoyager"
+        begin: "(?<=\bCOMP\b)\s+(var|ID|Lambda)\s*="
+        end: "(?=(\s*;|\s*$))"
+        beginCaptures:
+          1: { name: "variable.other.readwrite.cvoyager" }
+        patterns:
+          - include: "#expression"
+      - name: "meta.expression.cvoyager"
+        match: "\b([A-Za-z0-9_]+)\s*="
+        captures:
+          1: { name: "variable.other.readwrite.cvoyager" }
+        patterns:
+          - include: "#expression"
+  expression:
+    patterns:
+      - name: "constant.numeric.cvoyager"
+        match: "\b\d+(\.\d+)?\b"
+      - name: "keyword.operator.cvoyager"
+        match: "[+\-*/=<>!]"
+      - name: "string.quoted.double.cvoyager"
+        begin: "\""
+        end: "\""
+        patterns:
+          - name: "constant.character.escape.cvoyager"
+            match: "\\."
+  env-token:
+    name: "constant.character.escape.cvoyager"
+    match: "(%)([^%]+)(%)"
+  file-variable-token:
+    name: "variable.parameter.cvoyager"
+    match: "(@)([^@]+)(@)"
+  # ========== Expressions ==========
+
+scopeName: "source.s"
